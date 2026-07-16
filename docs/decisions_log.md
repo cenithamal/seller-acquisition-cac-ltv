@@ -1,0 +1,60 @@
+# Decisions Log — CAC/LTV Optimizer
+
+A running record of judgment calls made during this project, logged at
+the time they were made. See docs/data_dictionary.md for what the data
+itself looks like; this file is about the reasoning behind the choices
+made with it.
+
+---
+
+## 2026-07-13 — Decision: Keeping origin = 'unknown' as its own category
+
+**Decision:** Kept 'unknown' as its own category in the channel
+comparison rather than filtering those sellers out of
+seller_channel_revenue.
+
+**Why:** Filtering them out would understate total revenue and hide
+part of the business. An honest 'unknown' bucket alongside the named
+channels is more defensible than silently dropping real sellers.
+
+---
+
+## 2026-07-13 — Decision: Handling blank origin values
+
+**Decision:** Coalesced blank/null origin values into 'unknown' at the
+SQL level, so blanks and 'unknown' are treated as one category.
+
+**Why:** Both represent the same practical situation — no identifiable
+channel for that seller — so splitting them into two buckets would
+fragment the same group without adding real information.
+
+**Alternative considered:** Keeping blanks as a separate third
+category, in case they indicate a different underlying issue (e.g., a
+tracking failure) than an explicit 'unknown' tag. Rejected — no way to
+distinguish the two causes with the data available; revisit if that
+ever becomes knowable.
+
+---
+
+## 2026-07-13 — Decision: Column scope for seller_channel_revenue
+
+**Decision:** Excluded most of raw_deal's columns (business_segment,
+lead_type, declared_monthly_revenue, has_company, has_gtin, etc.) from
+the final view, keeping only seller_id, origin, price,
+order_purchase_timestamp, order_id, won_date, and first_contact_date.
+
+**Why:** These columns don't serve the core CAC/LTV-by-channel
+question. Carrying them forward "just in case" would bloat the view
+without adding analytical value at this stage.
+
+---
+
+## 2026-07-13 — Decision: Excluding freight_value from revenue
+
+**Decision:** Used only `price` (not `freight_value`) as the revenue
+figure in seller_channel_revenue.
+
+**Why:** Freight is a pass-through shipping cost, not revenue the
+seller generated — including it would inflate the LTV numbers.
+
+---
