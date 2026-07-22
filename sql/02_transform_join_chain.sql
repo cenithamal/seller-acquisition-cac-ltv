@@ -14,7 +14,7 @@ CREATE OR REPLACE VIEW seller_channel_revenue AS
 WITH channel_sellers AS (
     SELECT
         raw_deal.seller_id,
-        raw_lead.origin,
+        COALESCE(raw_lead.origin, 'unknown') AS origin,
         raw_lead.first_contact_date,
         raw_deal.won_date
     FROM raw_lead

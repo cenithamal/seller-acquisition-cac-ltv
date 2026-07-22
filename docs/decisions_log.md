@@ -58,3 +58,12 @@ figure in seller_channel_revenue.
 seller generated — including it would inflate the LTV numbers.
 
 ---
+## 2026-07-20 — Decision: Excluding other_publicities from CAC/LTV table
+
+**Decision:** Left other_publicities out of sql/03_metrics_cac_ltv.sql
+(uses INNER JOIN throughout) rather than including it with zeros.
+
+**Why:** other_publicities produced 65 leads but only 3 converted, and
+all 3 never sold anything — zero rows in seller_channel_revenue. A
+channel with no active sellers has no meaningful CAC/LTV to compare;
+it's a separate funnel-dropout finding, not a data point for this table.
