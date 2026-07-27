@@ -9,7 +9,7 @@ def get_engine():
         raise ValueError("DATABASE_URL environment variable is not set.")
     else:
         print("DATABASE_URL is set.")
-    engine = create_engine(database_url, echo=True)
+    engine = create_engine(database_url)
     return engine  # Create a SQLAlchemy engine with the database URL
 
 def connection_test():

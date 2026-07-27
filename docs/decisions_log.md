@@ -67,3 +67,9 @@ seller generated — including it would inflate the LTV numbers.
 all 3 never sold anything — zero rows in seller_channel_revenue. A
 channel with no active sellers has no meaningful CAC/LTV to compare;
 it's a separate funnel-dropout finding, not a data point for this table.
+
+## 2026-07-20 — Decision: Flagged display, other, and unknown channels
+
+**Decision:** Flagged display, other, and unknown channels as lowe confidence or unreliable channels.
+
+**Why:** flagged display, other, and unknown as low-confidence/unreliable based on confidence intervals; only organic_search, paid_search, and referral have intervals precise enough to support a real recommendation.
