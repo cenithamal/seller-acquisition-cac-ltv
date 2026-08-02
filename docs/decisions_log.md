@@ -73,3 +73,23 @@ it's a separate funnel-dropout finding, not a data point for this table.
 **Decision:** Flagged display, other, and unknown channels as lowe confidence or unreliable channels.
 
 **Why:** flagged display, other, and unknown as low-confidence/unreliable based on confidence intervals; only organic_search, paid_search, and referral have intervals precise enough to support a real recommendation.
+
+
+## 2026-07-30 — Decision: 60-day threshold for sellers to be activated
+
+**Decision:** Defined "activated" as a seller making at least one sale
+within 60 days of their won_date.
+
+**Why:** A reasonable window to judge early momentum without being too
+strict (a few days) or too lenient (many months).
+
+
+## 2026-07-30 — Decision: Exclude sellers who couldn't be observed for long enough time
+
+**Decision:** Of 462 sellers with zero sales, excluded 108 whose
+won_date was less than 60 days before the dataset's end (2018-08-29),
+leaving 354 confidently labeled "not activated."
+
+**Why:** These 108 hadn't had a full 60-day window yet — labeling them
+"not activated" would have unfairly judged sellers who simply ran out
+of observable time, not sellers who actually failed.
