@@ -93,3 +93,30 @@ leaving 354 confidently labeled "not activated."
 **Why:** These 108 hadn't had a full 60-day window yet — labeling them
 "not activated" would have unfairly judged sellers who simply ran out
 of observable time, not sellers who actually failed.
+
+## Decision: Stopped classification modeling after 5-model comparison
+[already drafted earlier — add if not yet saved]
+
+## Decision: Organic_search vs paid_search revenue difference not significant
+**Decision:** Ran Welch's t-test comparing per-seller revenue between
+organic_search and paid_search. p-value = 0.627.
+**Why it matters:** The apparent gap in average revenue between these
+two channels is not statistically significant — reinforces the
+confidence-interval caution from Milestone 3 Part 4.
+
+## Decision: Rebuilt cohort ramp-up chart after finding a composition bias
+**Decision:** Original ramp-up chart grouped sellers by "who transacted
+that month," causing medians to impossibly decrease month-over-month.
+Rebuilt using a fixed cohort (same sellers forward-filled across all
+months) with a 4-month eligibility window.
+**Why:** The original chart's sample composition shifted month to
+month, making comparisons invalid. Verified the fix with two checks:
+seller counts constant per channel across months, and medians never
+decreasing (both passed).
+
+## Decision: Business segment "other" grouping threshold
+**Decision:** Grouped segments with fewer than 10 sellers into "other"
+for descriptive analysis (not used in the earlier predictive model).
+**Why:** Consistent with the sample-size discipline used throughout
+the project; segments below this threshold were too thin to compare
+reliably.
